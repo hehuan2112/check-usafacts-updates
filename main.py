@@ -1,6 +1,7 @@
 import datetime
 import time
 import urllib.request
+from termcolor import colored
 
 URL_COVID19_CONFIRM = 'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_confirmed_usafacts.csv'
 URL_COVID19_DEATH = 'https://usafactsstatic.blob.core.windows.net/public/data/covid-19/covid_deaths_usafacts.csv'
@@ -38,14 +39,19 @@ while True:
     flag_death = dt in death_data
 
     if flag_covid:
-        print('* %s: covid data of %s updated!!' % (datetime.datetime.today().strftime('%H:%M:%S'), dt))
+        rst_covid = colored('UPDATED!', 'white', 'on_green', attrs=['bold'])
     else:
-        print('* %s: covid data of %s NOT YET.' % (datetime.datetime.today().strftime('%H:%M:%S'), dt))
+        rst_covid = colored('NOT YET.', 'red')
+
 
     if flag_death:
-        print('* %s: death data of %s updated!!' % (datetime.datetime.today().strftime('%H:%M:%S'), dt))
+        rst_death = colored('UPDATED!', 'white', 'on_green', attrs=['bold'])
     else:
-        print('* %s: death data of %s NOT YET.' % (datetime.datetime.today().strftime('%H:%M:%S'), dt))
+        rst_death = colored('NOT YET.', 'red')
+
+    now = datetime.datetime.today().strftime('%H:%M:%S')
+    print('* %s: covid data of %s %s' % (now, dt, rst_covid))
+    print('* %s: death data of %s %s' % (now, dt, rst_death))
 
     if flag_covid and flag_death:
         break
